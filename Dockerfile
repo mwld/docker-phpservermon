@@ -5,8 +5,7 @@ ENV PHP_TIMEZONE UTC
 ENV PHP_MEMORY_LIMIT 256M
 ENV MAX_UPLOAD 128M
 ENV PSM_DB_PORT 3306
-ENV UPDATE_INTERVAL 300
-ENV PHPSERVERMON_VER v3.3.2
+ENV UPDATE_INTERVAL 120
 
 RUN mkdir /logs /run/nginx
 
@@ -16,7 +15,7 @@ RUN apk add --no-cache --update libxml2-dev curl-dev supervisor nginx curl git \
 	&& docker-php-ext-install mysqli pdo_mysql curl xml sockets \
 	&& rm -rf /var/www/* \
     && git clone https://github.com/phpservermon/phpservermon.git ./ \
-    && git checkout tags/$PHPSERVERMON_VER \
+    && git checkout \
     && php composer.phar install \
     && rm -rf Makefile Vagrantfile composer* .git \
     && apk del --purge git libxml2-dev curl-dev
